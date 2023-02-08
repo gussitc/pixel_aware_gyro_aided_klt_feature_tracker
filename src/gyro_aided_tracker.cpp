@@ -688,7 +688,7 @@ float GyroAidedTracker::CheckFundamental(
         float sigma)
 {
     cv::Mat mask;
-    F21 = cv::findFundamentalMat(vPts1, vPts2, CV_FM_RANSAC, 3., 0.99, mask);
+    F21 = cv::findFundamentalMat(vPts1, vPts2, cv::FM_RANSAC, 3., 0.99, mask);
 
     const double f11 = F21.at<double>(0,0);
     const double f12 = F21.at<double>(0,1);

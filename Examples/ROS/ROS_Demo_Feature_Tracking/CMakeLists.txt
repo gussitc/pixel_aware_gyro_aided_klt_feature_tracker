@@ -29,7 +29,7 @@ else()
 endif()
 
 
-find_package(OpenCV 3.4 REQUIRED)
+find_package(OpenCV 4.2 REQUIRED)
 if(NOT OpenCV_FOUND)
    find_package(OpenCV 2.4.3 QUIET)
    if(NOT OpenCV_FOUND)
