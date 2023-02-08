@@ -79,9 +79,9 @@ Frame::Frame(double &t, cv::Mat &im, cv::Mat &im_dist, Frame* pLastFrame, Camera
     mThresholdOfPredictNewKeyPoint = mN * th;
 
     if(im.channels() == 3)
-        cv::cvtColor(im, mGray, CV_RGB2GRAY);
+        cv::cvtColor(im, mGray, cv::COLOR_RGB2GRAY);
     else if(im.channels() == 4)
-        cv::cvtColor(im, mGray, CV_RGBA2GRAY);
+        cv::cvtColor(im, mGray, cv::COLOR_RGBA2GRAY);
     else {
         im.copyTo(mGray);
     }
@@ -334,7 +334,7 @@ void Frame::Display(std::string winname, int drawFlowType, bool bDrawPatch, bool
     mGray.copyTo(im_out.rowRange(0, h).colRange(w+margin, 2*w+margin));
 
     if(im_out.channels() < 3) //this should be always true
-        cv::cvtColor(im_out, im_out, CV_GRAY2BGR);
+        cv::cvtColor(im_out, im_out, cv::COLOR_GRAY2BGR);
 
     int cnt_new_detected = 0;
     std::set<int> sPtIndexInLastFrame;

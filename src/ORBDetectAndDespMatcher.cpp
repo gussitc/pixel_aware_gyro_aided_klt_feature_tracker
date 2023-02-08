@@ -121,7 +121,7 @@ void ORBDetectAndDespMatcher::Display()
     mImgGrayRef.copyTo(im_out.rowRange(0, h).colRange(0, w));
     mImgGrayCur.copyTo(im_out.rowRange(0, h).colRange(w, 2*w));
     if(im_out.channels() < 3) //this should be always true
-        cv::cvtColor(im_out, im_out, CV_GRAY2BGR);
+        cv::cvtColor(im_out, im_out, cv::COLOR_GRAY2BGR);
 
     std::set<int> sPtIndexInRefFrame;
     for (uint i = 0; i < mvDMatches.size(); i++) {
