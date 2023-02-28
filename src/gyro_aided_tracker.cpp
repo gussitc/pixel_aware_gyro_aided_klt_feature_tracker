@@ -344,7 +344,8 @@ int GyroAidedTracker::GyroPredictFeaturesAndOpticalFlowRefined()
 int GyroAidedTracker::TrackFeatures()
 {
     Timer timer, timer_total;
-    IntegrateGyroMeasurements();
+    // FIXME(gustav): should not be commented out
+    // IntegrateGyroMeasurements();
     double t_integrate = timer.runTime_s(); timer.freshTimer();
 
     int n_predict;
