@@ -1,6 +1,6 @@
 <launch>
 <!--MH_01_easy MH_02_easy MH_03_medium MH_04_difficult MH_05_difficult V1_01_easy V1_02_medium V1_03_difficult V2_01_easy V2_02_medium V2_03_difficult  -->
-        <arg name="rosBag" default = "/home/hri/Documents/SLAM_Dataset/EuRoC/rosbag_file/V1_03_difficult.bag" />
+        <arg name="rosBag" default = "/home/gustav/catkin_ws_ov/data/V1_01_easy_short.bag" />
         <arg name="config_file" default = "$(find ROS_Demo_Feature_Tracking)/config/EuRoC.yaml" />
 
         <!-- set timedelay from bash input -->

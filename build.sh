@@ -26,7 +26,7 @@ echo "Configuring and building pixel_aware_gyro_aided_klt_feature_tracker ..."
 cd $_mydir
 mkdir build
 cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake .. -DCMAKE_BUILD_TYPE=Debug
 make -j12
 
 
