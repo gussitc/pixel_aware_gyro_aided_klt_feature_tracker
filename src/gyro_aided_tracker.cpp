@@ -11,15 +11,18 @@ const float GyroAidedTracker::TH_RATIO = 0.75f;
 GyroAidedTracker::GyroAidedTracker(double t, double t_ref, const cv::Mat &imgGrayRef_, const cv::Mat &imgGrayCur_,
                                    const std::vector<cv::KeyPoint> &vKeysRef_, const std::vector<cv::KeyPoint> &vKeysCur_,
                                    const std::vector<cv::KeyPoint> &vKeysUnRef_, const std::vector<cv::KeyPoint> &vKeysUnCur_,
-                                   const std::vector<IMU::Point> &vImuFromLastFrame, const cv::Point3f &bias_,
+                                   const std::vector<IMU::Point> &vImuFromLastFrame,
+                                   const IMU::Calib& imuCalib, const cv::Point3f &bias_,
                                    cv::Mat K_, cv::Mat DistCoef_, const cv::Mat &normalizeTable_,
                                    eType type_, ePredictMethod predictMethod_,
                                    std::string saveFolderPath, int halfPatchSize_
                                    ):
     mTimeStamp(t), mTimeStampRef(t_ref), mImgGrayRef(imgGrayRef_), mImgGrayCur(imgGrayCur_),
     mvKeysRef(vKeysRef_), mvKeysCur(vKeysCur_),
-    mvKeysRefUn(vKeysRef_), mvKeysCurUn(vKeysUnCur_),
-    mvImuFromLastFrame(vImuFromLastFrame), mBias(bias_),
+    mvKeysRefUn(vKeysUnRef_), mvKeysCurUn(vKeysUnCur_),
+    mvImuFromLastFrame(vImuFromLastFrame),
+    mRbc(imuCalib.Tbc.colRange(0,3).rowRange(0,3)),
+    mBias(bias_),
     mK(K_), mDistCoef(DistCoef_), mWidth(imgGrayCur_.cols), mHeight(imgGrayCur_.rows),
     mNormalizeTable(normalizeTable_), mType(type_), mSaveFolderPath(saveFolderPath),
     mHalfPatchSize(halfPatchSize_), mPredictMethod(predictMethod_)

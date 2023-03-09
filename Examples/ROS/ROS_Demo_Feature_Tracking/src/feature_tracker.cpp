@@ -231,7 +231,12 @@ void sensorProcessTimer(const ros::TimerEvent& event)
             cv::Point3f biasg(0,0,0);
 
             /// Pixel-Aware Gyro-Aided KLT Feature Tracking
-            GyroAidedTracker gyroPredictMatcher(lastFrame, curFrame, imuCalib, biasg, cv::Mat(),
+            GyroAidedTracker gyroPredictMatcher(curFrame.mTimeStamp, lastFrame.mTimeStamp, lastFrame.mGray, curFrame.mGray,
+                                                lastFrame.mvKeys, curFrame.mvKeys,
+                                                lastFrame.mvKeysUn, curFrame.mvKeysUn,
+                                                curFrame.mvImuFromLastFrame, imuCalib, biasg,
+                                                curFrame.mpCameraParams->mK, curFrame.mpCameraParams->mDistCoef,
+                                                cv::Mat(), // normalization table
                                                 GyroAidedTracker::GYRO_PREDICT_WITH_OPTICAL_FLOW_REFINED_CONSIDER_ILLUMINATION_DEFORMATION,
                                                 GyroAidedTracker::PIXEL_AWARE_PREDICTION,
                                                 saveFolderPath, half_patch_size);
