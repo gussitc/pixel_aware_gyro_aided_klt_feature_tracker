@@ -319,10 +319,12 @@ int main(int argc, char **argv)
     ros::NodeHandle nh("~");
     ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Info);
 
-    nh.getParam("rosBag", rosbag_file);
-    nh.getParam("manuallyAddTimeDelay", MANUALLY_ADD_TIME_DELAY);
-    std::string output_file;
-    nh.getParam("output_file", output_file);
+    // nh.getParam("rosBag", rosbag_file);
+    rosbag_file = "/home/gustav/catkin_ws_ov/data/V1_01_easy_short.bag";
+    // nh.getParam("manuallyAddTimeDelay", MANUALLY_ADD_TIME_DELAY);
+    MANUALLY_ADD_TIME_DELAY = 0;
+    std::string output_file = "/outfiles/";
+    // nh.getParam("output_file", output_file);
 
     std::cout << "rosbag_file: " << rosbag_file << std::endl;
     std::cout << "manuallyAddTimeDelay: " << MANUALLY_ADD_TIME_DELAY << std::endl;
@@ -330,23 +332,25 @@ int main(int argc, char **argv)
 
     cout << "running feature_tracker ..." << endl;
 
-    if(argc != 2)
-    {
-        cerr << endl << "[Usage]: roslaunch ROS_Demo_Feature_Tracking EuRoC.launch" << endl;
-        cerr << endl << "If you enable the 'readFromRosBag' flag in setting file, "
-                        "then you should specify the 'rosBag' parameter in the launch file. "
-                        "The software will automatically read messages from the bag file." << endl;
-        cerr << endl << "Else, you should publish the messages through imuTopic and imageTopic." << endl;
+    // if(argc != 2)
+    // {
+    //     cerr << endl << "[Usage]: roslaunch ROS_Demo_Feature_Tracking EuRoC.launch" << endl;
+    //     cerr << endl << "If you enable the 'readFromRosBag' flag in setting file, "
+    //                     "then you should specify the 'rosBag' parameter in the launch file. "
+    //                     "The software will automatically read messages from the bag file." << endl;
+    //     cerr << endl << "Else, you should publish the messages through imuTopic and imageTopic." << endl;
 
-        ros::shutdown();
-        return 1;
-    }
+    //     ros::shutdown();
+    //     return 1;
+    // }
 
-    loadConfigureFile(argv[1]);
+    // loadConfigureFile(argv[1]);
+    char *path = getcwd(NULL, 0);
+    std::string config_path = "/../config/EuRoC.yaml";
+    loadConfigureFile(path + config_path);
     cout << "Tbc: " << imuCalib.Tbc << endl;
 
     // create folder for store the processing results
-    char *path = getcwd(NULL, 0);
     saveFolderPath = path + output_file;
     std::cout << "saveFolderPath: " << saveFolderPath << std::endl;
 

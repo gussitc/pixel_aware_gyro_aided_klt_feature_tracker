@@ -27,6 +27,7 @@ GyroAidedTracker::GyroAidedTracker(double t, double t_ref, const cv::Mat &imgGra
     mNormalizeTable(normalizeTable_), mType(type_), mSaveFolderPath(saveFolderPath),
     mHalfPatchSize(halfPatchSize_), mPredictMethod(predictMethod_)
 {
+    assert(vImuFromLastFrame[0].t >= t_ref && vImuFromLastFrame[vImuFromLastFrame.size() - 1].t < t);
     Initialize();
 }
 
