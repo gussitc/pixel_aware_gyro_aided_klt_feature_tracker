@@ -51,6 +51,8 @@ public:
     static const float TH_NCC_HIGH;
     static const float TH_NCC_LOW;
     static const float TH_RATIO;
+    static const char* TRACK_FEATURES_FILE_NAME;
+    static const char* TIME_COST_FILE_NAME;
 
     enum eType{
         OPENCV_OPTICAL_FLOW_PYR_LK = 0,

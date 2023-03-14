@@ -358,6 +358,12 @@ int main(int argc, char **argv)
     saveFolderPath = path + output_file;
     std::cout << "saveFolderPath: " << saveFolderPath << std::endl;
 
+    // clear output files instead of appending
+    std::ofstream fp1(saveFolderPath + GyroAidedTracker::TRACK_FEATURES_FILE_NAME, ofstream::out);
+    fp1.close();
+    std::ofstream fp2(saveFolderPath + GyroAidedTracker::TIME_COST_FILE_NAME, ofstream::out);
+    fp2.close();
+
     detectedKeypointsFile = path + detectedKeypointsFile;
     if(loadDetectedKeypoints){ // if Load keypoints from file. Default: not execute
         std::string path = detectedKeypointsFile + "/corresponds.txt";

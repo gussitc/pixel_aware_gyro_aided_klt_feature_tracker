@@ -6,7 +6,7 @@ import numpy as np
 # Pred. suc. rate    = Geo. valid / patchMatchPredict Num
 # feature track rate = Geo. valid / RefKey Num
 
-folder_path = 'ov_core/pixel_aware_gyro_aided_klt_feature_tracker/Examples/ROS/ROS_Demo_Feature_Tracking/bin/outfiles/'
+folder_path = 'ov_core/pixel_aware_gyro_aided_klt_feature_tracker/Examples/ROS/ROS_Demo_Feature_Tracking/output/'
 # file_name = 'trackFeatures_gyro.txt'
 # file_name = 'trackFeatures_opencv.txt'
 file_name = 'trackFeatures.txt'

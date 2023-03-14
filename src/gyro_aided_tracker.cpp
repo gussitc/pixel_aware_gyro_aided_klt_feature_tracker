@@ -7,6 +7,8 @@
 const float GyroAidedTracker::TH_NCC_HIGH = 0.6f; //0.85f;
 const float GyroAidedTracker::TH_NCC_LOW = 0.3f; // 0.65f;
 const float GyroAidedTracker::TH_RATIO = 0.75f;
+const char* GyroAidedTracker::TRACK_FEATURES_FILE_NAME = "trackFeatures.txt";
+const char* GyroAidedTracker::TIME_COST_FILE_NAME = "timeCost.txt";
 
 GyroAidedTracker::GyroAidedTracker(double t, double t_ref, const cv::Mat &imgGrayRef_, const cv::Mat &imgGrayCur_,
                                    const std::vector<cv::KeyPoint> &vKeysRef_, const std::vector<cv::KeyPoint> &vKeysCur_,
@@ -497,7 +499,7 @@ std:vector<int> vIndeces;
        << ", track_score: " << track_score
        << ", recall rate: " << 100.0 * vPts1.size() / mN << "%"; // << std::endl;
     std::string msg1 = "T: " + std::to_string(mTimeStamp) + ", " + s1.str();
-    SaveMsgToFile("trackFeatures.txt", msg1);
+    SaveMsgToFile(TRACK_FEATURES_FILE_NAME, msg1);
 
     std::stringstream s2;
     s2  << "Total FeatureTrack: " << mTImeCostTotalFeatureTrack
@@ -506,7 +508,7 @@ std:vector<int> vIndeces;
         << ", OptFlowResultFilterOut: " << mTimeCostOptFlowResultFilterOut
         << ", GeometryValidation: " << mTimeCostGeometryValidation;// << std::endl;
     std::string msg2 = "T: " + std::to_string(mTimeStamp) + ", " + s2.str();
-    SaveMsgToFile("timeCost.txt", msg2);
+    SaveMsgToFile(TIME_COST_FILE_NAME, msg2);
 
     return cnt_inlier;
 }
