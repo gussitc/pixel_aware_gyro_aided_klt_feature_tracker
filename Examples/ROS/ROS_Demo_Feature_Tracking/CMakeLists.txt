@@ -17,9 +17,6 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
 )
 
-find_package(OpenCV 4.2 REQUIRED)
-find_package(Eigen3 3.1.0 REQUIRED)
-
 include_directories(
 ${catkin_INCLUDE_DIRS}
 ${PROJECT_SOURCE_DIR}
@@ -30,13 +27,10 @@ ${PROJECT_SOURCE_DIR}/../../../include
 
 set(LINK_LIBS
 ${catkin_LIBRARIES}
-${OpenCV_LIBS}
-${EIGEN3_LIBS}
-${PROJECT_SOURCE_DIR}/../../../Thirdparty/glog/lib/libglog.so
 pixel_aware_gyro_aided_klt_feature_tracker
 )
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE})
 
 add_executable(${PROJECT_NAME} src/feature_tracker.cpp)
 

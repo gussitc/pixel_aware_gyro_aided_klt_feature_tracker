@@ -326,7 +326,7 @@ int main(int argc, char **argv)
     rosbag_file = "/home/gustav/catkin_ws_ov/data/V1_03_difficult_short.bag";
     // nh.getParam("manuallyAddTimeDelay", MANUALLY_ADD_TIME_DELAY);
     MANUALLY_ADD_TIME_DELAY = 0;
-    std::string output_file = "/outfiles/";
+    std::string output_file = "/../output/";
     // nh.getParam("output_file", output_file);
 
     std::cout << "rosbag_file: " << rosbag_file << std::endl;
@@ -348,7 +348,8 @@ int main(int argc, char **argv)
     // }
 
     // loadConfigureFile(argv[1]);
-    char *path = getcwd(NULL, 0);
+    std::string path = getcwd(NULL, 0);
+    path += "/../"; // To compensate for the binary being moved inside Debug/Release folder
     std::string config_path = "/../config/EuRoC.yaml";
     loadConfigureFile(path + config_path);
     cout << "Tbc: " << imuCalib.Tbc << endl;

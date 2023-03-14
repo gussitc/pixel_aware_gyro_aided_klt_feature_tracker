@@ -21,7 +21,7 @@
 */
 
 #include "frame.h"
-#include "../Thirdparty/glog/include/glog/logging.h"
+#include <glog/logging.h>
 #include "utils.h"
 #include <iostream>
 

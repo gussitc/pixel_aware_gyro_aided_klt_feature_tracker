@@ -32,7 +32,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/calib3d/calib3d.hpp>
 
-#include "../Thirdparty/glog/include/glog/logging.h"
+#include <glog/logging.h>
 #include "frame.h"
 
 #include "ORBextractor.h"

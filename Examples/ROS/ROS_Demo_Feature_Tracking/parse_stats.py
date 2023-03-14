@@ -8,7 +8,8 @@ import numpy as np
 
 folder_path = 'ov_core/pixel_aware_gyro_aided_klt_feature_tracker/Examples/ROS/ROS_Demo_Feature_Tracking/bin/outfiles/'
 # file_name = 'trackFeatures_gyro.txt'
-file_name = 'trackFeatures_opencv.txt'
+# file_name = 'trackFeatures_opencv.txt'
+file_name = 'trackFeatures.txt'
 
 times = []
 ref_key_num = []
@@ -16,6 +17,7 @@ patch_match_predict_num = []
 geo_valid = []
 lost_feats = []
 frame_counter = 0
+feature_track_rate = []
 
 def get_number(pattern, string):
     match = re.search(pattern, string)
@@ -29,8 +31,10 @@ with open(folder_path + file_name) as f:
         geo_valid.append(get_number(r'Geo. valid: (.*?),', line))
 
         lost_feats.append(ref_key_num[-1] - geo_valid[-1])
+        feature_track_rate.append(geo_valid[-1] / ref_key_num[-1])
         frame_counter += 1
 
 runtime = times[-1] - times[0]
 print(f'runtime: {runtime:.2f}, num_frames: {frame_counter}, fps: {frame_counter/runtime:.2f}')
 print(f'average lost_feats/frame: {np.mean(lost_feats):.2f}')
+print(f'average feature track rate: {np.mean(feature_track_rate):.2f}')

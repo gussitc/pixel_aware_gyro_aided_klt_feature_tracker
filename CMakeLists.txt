@@ -52,10 +52,11 @@ include_directories(
 set(LINK_LIBS
 ${OpenCV_LIBS}
 ${EIGEN3_LIBS}
-${PROJECT_SOURCE_DIR}/Thirdparty/glog/lib/libglog.so
+# ${PROJECT_SOURCE_DIR}/Thirdparty/glog/lib/libglog.so
+glog
 )
 
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
+# set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 add_library(${PROJECT_NAME} SHARED
     include/frame.h
     src/frame.cpp
@@ -74,11 +75,13 @@ add_library(${PROJECT_NAME} SHARED
     src/ORBextractor.cc
 )
 
-# Build examples
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Demo)
+target_link_libraries(${PROJECT_NAME} INTERFACE ${LINK_LIBS})
 
-add_executable(RealSenseD435i
-Examples/Demo/RealSenseD435i.cpp)
-target_link_libraries(RealSenseD435i ${PROJECT_NAME} ${LINK_LIBS})
+# Build examples
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Demo)
+
+# add_executable(RealSenseD435i
+# Examples/Demo/RealSenseD435i.cpp)
+# target_link_libraries(RealSenseD435i ${PROJECT_NAME} ${LINK_LIBS})
 
 add_subdirectory(Examples/ROS/ROS_Demo_Feature_Tracking)

@@ -35,7 +35,7 @@
 #include <stdio.h>
 #include <sys/time.h>
 
-#include "../Thirdparty/glog/include/glog/logging.h"
+#include <glog/logging.h>
 
 #include "utils.h"
 #include "imu_types.h"
