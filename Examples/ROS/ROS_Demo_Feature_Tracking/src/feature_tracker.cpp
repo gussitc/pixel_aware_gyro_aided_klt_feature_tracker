@@ -237,7 +237,9 @@ void sensorProcessTimer(const ros::TimerEvent& event)
                                                 curFrame.mvImuFromLastFrame, imuCalib, biasg,
                                                 curFrame.mpCameraParams->mK, curFrame.mpCameraParams->mDistCoef,
                                                 cv::Mat(), // normalization table
+                                                // GyroAidedTracker::OPENCV_OPTICAL_FLOW_PYR_LK,
                                                 GyroAidedTracker::GYRO_PREDICT_WITH_OPTICAL_FLOW_REFINED_CONSIDER_ILLUMINATION_DEFORMATION,
+                                                // GyroAidedTracker::IMAGE_ONLY_OPTICAL_FLOW_CONSIDER_ILLUMINATION,
                                                 GyroAidedTracker::PIXEL_AWARE_PREDICTION,
                                                 saveFolderPath, half_patch_size);
 
@@ -320,7 +322,8 @@ int main(int argc, char **argv)
     ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Info);
 
     // nh.getParam("rosBag", rosbag_file);
-    rosbag_file = "/home/gustav/catkin_ws_ov/data/V1_01_easy_short.bag";
+    // rosbag_file = "/home/gustav/catkin_ws_ov/data/V1_01_easy_short.bag";
+    rosbag_file = "/home/gustav/catkin_ws_ov/data/V1_03_difficult_short.bag";
     // nh.getParam("manuallyAddTimeDelay", MANUALLY_ADD_TIME_DELAY);
     MANUALLY_ADD_TIME_DELAY = 0;
     std::string output_file = "/outfiles/";
@@ -382,8 +385,8 @@ int main(int argc, char **argv)
         pORBextractorRight = new ORB_SLAM2::ORBextractor(nFeatures,fScaleFactor,nLevels,fIniThFAST,fMinThFAST);
     }
 
-    ros::Rate r(1000);    // 1000
-    ros::Timer process_timer = nh.createTimer(ros::Duration(0.005), sensorProcessTimer);
+    // ros::Rate r(1000);    // 1000
+    // ros::Timer process_timer = nh.createTimer(ros::Duration(0.005), sensorProcessTimer);
 
     ////////////////////////////////////////////////////////////
     if(read_from_rosbag)
@@ -409,32 +412,33 @@ int main(int argc, char **argv)
             if(m.getTopic() == image_topic || ("/"+m.getTopic() == image_topic)){
                 sensor_msgs::ImageConstPtr sImage = m.instantiate<sensor_msgs::Image>();
                 if(sImage != NULL) imageCallback(sImage);
+                sensorProcessTimer(ros::TimerEvent());
 
                 // button control
-                if(cv::waitKey(1) == 's')
-                {
-                    LOG(INFO) << "Enable step mode, please select the image show window "
-                                 "and then press null space button to step-continue or press 'q' to return to normal mode.";
-                    step_mode = true;
-                }
-                while (step_mode) {
-                    int key = cv::waitKey(1);
-                    if(key == 'q') {
-                        step_mode = false;
-                        LOG(INFO) << "Noraml mode ...";
-                        break;
-                    }else if(key == 32){ // Capture next frame.
-                        break;
-                    }else{
-                        r.sleep();
-                        if(!ros::ok())
-                            break;
-                    }
-                }
+                // if(cv::waitKey(1) == 's')
+                // {
+                //     LOG(INFO) << "Enable step mode, please select the image show window "
+                //                  "and then press null space button to step-continue or press 'q' to return to normal mode.";
+                //     step_mode = true;
+                // }
+                // while (step_mode) {
+                //     int key = cv::waitKey(1);
+                //     if(key == 'q') {
+                //         step_mode = false;
+                //         LOG(INFO) << "Noraml mode ...";
+                //         break;
+                //     }else if(key == 32){ // Capture next frame.
+                //         break;
+                //     }else{
+                //         // r.sleep();
+                //         if(!ros::ok())
+                //             break;
+                //     }
+                // }
             }
 
-            ros::spinOnce();
-            r.sleep();
+            // ros::spinOnce();
+            // r.sleep();
             if(!ros::ok())
                 break;
         }
