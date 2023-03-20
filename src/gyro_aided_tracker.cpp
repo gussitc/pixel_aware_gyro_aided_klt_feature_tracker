@@ -477,7 +477,8 @@ std:vector<int> vIndeces;
 
 
         for (size_t i = 0, iend = vIndeces.size(); i < iend; i++) {
-            if(!vbInliers[i]){
+            // Also check if the predicted points are actually inside the image
+            if(!vbInliers[i] || (vPts2.at(i).x < 0 || vPts2.at(i).y < 0 || (int)vPts2.at(i).x >= mWidth || (int)vPts2.at(i).y >= mHeight)){
                 mvStatus[vIndeces[i]] = false;  // mark outliers
                 cnt_outlier ++;
             }

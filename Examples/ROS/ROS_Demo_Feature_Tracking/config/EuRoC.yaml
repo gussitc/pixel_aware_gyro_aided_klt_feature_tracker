@@ -13,7 +13,7 @@ readFromRosBag: 1   # 1: read from rosbag; 0: subscribe from rosbag (you should 
 # Paramters!
 #--------------------------------------------------------------------------------------------
 downSampleRate: 1  # default: 1
-KeyPointNumber: 500
+KeyPointNumber: 200
 ThresholdOfPredictNewKeyPoint: 1.0
 HalfPatchSize: 5
 
