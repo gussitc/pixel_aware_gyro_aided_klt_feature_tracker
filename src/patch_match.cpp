@@ -37,7 +37,7 @@ PatchMatch::PatchMatch(GyroAidedTracker* pMatcher_,
                        bool bRegularizationPenalty_,
                        bool bCalculateNCC_):
     mpMatcher(pMatcher_),
-    mN(pMatcher_->mvKeysRef.size()),
+    mN(pMatcher_->mvKeysRefUn.size()),
     mHalfPatchSize(halfPatchSize_), mIterations(iterations_), mPyramids(pyramids_),
     mbHasGyroPredictInitial(bHasGyroPredictInitial_), mbInverse(bInverse_),
     mbConsiderIllumination(bConsiderIllumination_), mbConsiderAffineDeformation(bConsiderAffineDeformation_),

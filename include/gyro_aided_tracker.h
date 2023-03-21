@@ -109,24 +109,32 @@ public:
 
 public:
     GyroAidedTracker(double t, double t_ref, const cv::Mat &imgGrayRef_, const cv::Mat &imgGrayCur_,
-                     const std::vector<cv::KeyPoint> &vKeysRef_, const std::vector<cv::KeyPoint> &vKeysCur_,
-                     const std::vector<cv::KeyPoint> &vKeysUnRef_, const std::vector<cv::KeyPoint> &vKeysUnCur_,
+                     const std::vector<cv::KeyPoint> &vKeysUnRef_,
                      const std::vector<IMU::Point> &vImuFromLastFrame,
                      const IMU::Calib& imuCalib, const cv::Point3f &bias_,
                      cv::Mat K_, cv::Mat DistCoef_, const cv::Mat &normalizeTable_,
-                     eType type_ = GYRO_PREDICT_WITH_OPTICAL_FLOW_REFINED_CONSIDER_ILLUMINATION_DEFORMATION,
-                     ePredictMethod predictMethod_ = PIXEL_AWARE_PREDICTION,
-                     std::string saveFolderPath="",
-                     int halfPatchSize_ = 5);
+                     eType type_, ePredictMethod predictMethod_,
+                     std::string saveFolderPath, int halfPatchSize_);
 
-    GyroAidedTracker(const Frame& pFrameRef, const Frame& pFrameCur,
-                     const IMU::Calib& imuCalib,
-                     const cv::Point3f &biasg_,
-                     const cv::Mat &normalizeTable,
-                     eType type_ = GYRO_PREDICT_WITH_OPTICAL_FLOW_REFINED_CONSIDER_ILLUMINATION_DEFORMATION,
-                     ePredictMethod predictMethod_ = PIXEL_AWARE_PREDICTION,
-                     std::string saveFolderPath="",
-                     int halfPatchSize_ = 5);
+    // GyroAidedTracker(double t, double t_ref, const cv::Mat &imgGrayRef_, const cv::Mat &imgGrayCur_,
+    //                  const std::vector<cv::KeyPoint> &vKeysRef_, const std::vector<cv::KeyPoint> &vKeysCur_,
+    //                  const std::vector<cv::KeyPoint> &vKeysUnRef_, const std::vector<cv::KeyPoint> &vKeysUnCur_,
+    //                  const std::vector<IMU::Point> &vImuFromLastFrame,
+    //                  const IMU::Calib& imuCalib, const cv::Point3f &bias_,
+    //                  cv::Mat K_, cv::Mat DistCoef_, const cv::Mat &normalizeTable_,
+    //                  eType type_ = GYRO_PREDICT_WITH_OPTICAL_FLOW_REFINED_CONSIDER_ILLUMINATION_DEFORMATION,
+    //                  ePredictMethod predictMethod_ = PIXEL_AWARE_PREDICTION,
+    //                  std::string saveFolderPath="",
+    //                  int halfPatchSize_ = 5);
+
+    // GyroAidedTracker(const Frame& pFrameRef, const Frame& pFrameCur,
+    //                  const IMU::Calib& imuCalib,
+    //                  const cv::Point3f &biasg_,
+    //                  const cv::Mat &normalizeTable,
+    //                  eType type_ = GYRO_PREDICT_WITH_OPTICAL_FLOW_REFINED_CONSIDER_ILLUMINATION_DEFORMATION,
+    //                  ePredictMethod predictMethod_ = PIXEL_AWARE_PREDICTION,
+    //                  std::string saveFolderPath="",
+    //                  int halfPatchSize_ = 5);
 
     void Initialize();
 
@@ -182,10 +190,10 @@ public:
     double mTimeStampRef;
     const cv::Mat &mImgGrayRef;
     const cv::Mat &mImgGrayCur;
-    const std::vector<cv::KeyPoint> &mvKeysRef;      // Keypoints in original reference image
+    // const std::vector<cv::KeyPoint> &mvKeysRef;      // Keypoints in original reference image
     const std::vector<cv::KeyPoint> &mvKeysRefUn;    // Undistorted keypoint of reference image. Used for Gyro. predict
-    const std::vector<cv::KeyPoint> &mvKeysCur;      // Keypoints in original current image
-    const std::vector<cv::KeyPoint> &mvKeysCurUn;    // Undistorted keypoint of current image. Used for Gyro. predict
+    // const std::vector<cv::KeyPoint> &mvKeysCur;      // Keypoints in original current image
+    // const std::vector<cv::KeyPoint> &mvKeysCurUn;    // Undistorted keypoint of current image. Used for Gyro. predict
 
     const std::vector<IMU::Point> &mvImuFromLastFrame;
     const cv::Point3f &mBias;
