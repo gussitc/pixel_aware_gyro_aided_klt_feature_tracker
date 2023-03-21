@@ -551,6 +551,7 @@ void GyroAidedTracker::IntegrateGyroMeasurements()
 {
     cv::Mat dR_ref_cur = cv::Mat::eye(3, 3, CV_32F);
     const int n = mvImuFromLastFrame.size()-1;
+    cv::Point3f angVel_total;
 
     // Consider the gap between the IMU timestamp and camera timestamp.
     for (int i = 0; i < n; i++) {
@@ -582,9 +583,12 @@ void GyroAidedTracker::IntegrateGyroMeasurements()
             angVel = mvImuFromLastFrame[i].w;
             tstep = mTimeStamp - mTimeStampRef;
         }
-
+        angVel_total += angVel;
         dR_ref_cur *= IntegrateOneGyroMeasurement(angVel, tstep);
     }
+    std::ofstream fp(mSaveFolderPath + "angVel.txt", ofstream::app);
+    fp << std::fixed << std::setprecision(6);
+    fp << mTimeStamp << ": " << angVel_total / (float)mvImuFromLastFrame.size() << std::endl;
 
     cv::Mat Rcl = mRbc.t() * dR_ref_cur.t() * mRbc;
     SetRcl(Rcl);

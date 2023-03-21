@@ -322,7 +322,8 @@ int main(int argc, char **argv)
 
     // nh.getParam("rosBag", rosbag_file);
     // rosbag_file = "/home/gustav/catkin_ws_ov/data/V1_01_easy_short.bag";
-    rosbag_file = "/home/gustav/catkin_ws_ov/data/V1_03_difficult_short.bag";
+    // rosbag_file = "/home/gustav/catkin_ws_ov/data/V1_03_difficult_short.bag";
+    rosbag_file = "/home/gustav/catkin_ws_ov/data/V2_03_difficult_short.bag";
     // nh.getParam("manuallyAddTimeDelay", MANUALLY_ADD_TIME_DELAY);
     MANUALLY_ADD_TIME_DELAY = 0;
     std::string output_file = "/../output/";

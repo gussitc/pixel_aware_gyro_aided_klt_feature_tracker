@@ -156,7 +156,7 @@ public:
     // Search matches between keypoints in current frame and reference frame, using optical flow tracking (KLT)
     int SearchByOpencvKLT(); // Unuse
 
-private:
+// private:
     void GyroPredictOnePixel(cv::Point2f &pt_ref, cv::Point2f &pt_predict, cv::Point2f &pt_predict_distort, cv::Point2f &flow);
 
     // Predict features using gyroscope integrated rotation (Rcl), do not use depth and translation
