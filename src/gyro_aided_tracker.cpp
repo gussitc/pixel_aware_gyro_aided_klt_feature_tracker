@@ -202,6 +202,15 @@ int GyroAidedTracker::GyroPredictFeatures()
             n_predict ++;
     }
 
+    std::ofstream fp(mSaveFolderPath + "gyroFlow.txt", ofstream::app);
+    fp << std::fixed << std::setprecision(3);
+    fp << mTimeStamp << ": ";
+    for (auto flow : mvFlowsPredictUn){
+        fp << flow << " ";
+    }
+    fp << std::endl;
+
+
     std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
     mTimeCostGyroPredict = std::chrono::duration_cast<std::chrono::duration<float> >(t2 - t1).count();
 

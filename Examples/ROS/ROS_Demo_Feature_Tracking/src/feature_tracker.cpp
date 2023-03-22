@@ -392,8 +392,8 @@ int main(int argc, char **argv)
         pORBextractorRight = new ORB_SLAM2::ORBextractor(nFeatures,fScaleFactor,nLevels,fIniThFAST,fMinThFAST);
     }
 
-    // ros::Rate r(1000);    // 1000
-    // ros::Timer process_timer = nh.createTimer(ros::Duration(0.005), sensorProcessTimer);
+    ros::Rate r(1000);    // 1000
+    ros::Timer process_timer = nh.createTimer(ros::Duration(0.005), sensorProcessTimer);
 
     ////////////////////////////////////////////////////////////
     if(read_from_rosbag)
@@ -419,33 +419,33 @@ int main(int argc, char **argv)
             if(m.getTopic() == image_topic || ("/"+m.getTopic() == image_topic)){
                 sensor_msgs::ImageConstPtr sImage = m.instantiate<sensor_msgs::Image>();
                 if(sImage != NULL) imageCallback(sImage);
-                sensorProcessTimer(ros::TimerEvent());
+                // sensorProcessTimer(ros::TimerEvent());
 
                 // button control
-                // if(cv::waitKey(1) == 's')
-                // {
-                //     LOG(INFO) << "Enable step mode, please select the image show window "
-                //                  "and then press null space button to step-continue or press 'q' to return to normal mode.";
-                //     step_mode = true;
-                // }
-                // while (step_mode) {
-                //     int key = cv::waitKey(1);
-                //     if(key == 'q') {
-                //         step_mode = false;
-                //         LOG(INFO) << "Noraml mode ...";
-                //         break;
-                //     }else if(key == 32){ // Capture next frame.
-                //         break;
-                //     }else{
-                //         // r.sleep();
-                //         if(!ros::ok())
-                //             break;
-                //     }
-                // }
+                if(cv::waitKey(1) == 's')
+                {
+                    LOG(INFO) << "Enable step mode, please select the image show window "
+                                 "and then press null space button to step-continue or press 'q' to return to normal mode.";
+                    step_mode = true;
+                }
+                while (step_mode) {
+                    int key = cv::waitKey(1);
+                    if(key == 'q') {
+                        step_mode = false;
+                        LOG(INFO) << "Noraml mode ...";
+                        break;
+                    }else if(key == 32){ // Capture next frame.
+                        break;
+                    }else{
+                        r.sleep();
+                        if(!ros::ok())
+                            break;
+                    }
+                }
             }
 
-            // ros::spinOnce();
-            // r.sleep();
+            ros::spinOnce();
+            r.sleep();
             if(!ros::ok())
                 break;
         }
