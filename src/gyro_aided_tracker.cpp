@@ -542,6 +542,21 @@ std:vector<int> vIndeces;
     std::string msg2 = "T: " + std::to_string(mTimeStamp) + ", " + s2.str();
     SaveMsgToFile(TIME_COST_FILE_NAME, msg2);
 
+    std::ofstream fp_match(mSaveFolderPath + "matchFlow.txt", ofstream::app);
+    std::ofstream fp_error(mSaveFolderPath + "errorFlow.txt", ofstream::app);
+    fp_match << std::fixed << std::setprecision(3);
+    fp_match << mTimeStamp << ": ";
+    fp_error << std::fixed << std::setprecision(3);
+    fp_error << mTimeStamp << ": ";
+    for (size_t i = 0; i < mvPtPredictUn.size(); i++)
+    {
+      if (!mvStatus[i]) continue;
+      fp_match << mvPtPredictUn[i] - mvKeysRefUn[i].pt << " ";
+      fp_error << mvPtPredictUn[i] - mvPtGyroPredictUn[i] << " ";
+    }
+    fp_match << std::endl;
+    fp_error << std::endl;
+
     return cnt_inlier;
 }
 

@@ -322,6 +322,7 @@ int main(int argc, char **argv)
 
     // nh.getParam("rosBag", rosbag_file);
     // rosbag_file = "/home/gustav/catkin_ws_ov/data/V1_01_easy_short.bag";
+    // rosbag_file = "/home/gustav/catkin_ws_ov/data/V1_01_easy_short_short.bag";
     // rosbag_file = "/home/gustav/catkin_ws_ov/data/V1_03_difficult_short.bag";
     rosbag_file = "/home/gustav/catkin_ws_ov/data/V2_03_difficult_short.bag";
     // nh.getParam("manuallyAddTimeDelay", MANUALLY_ADD_TIME_DELAY);
@@ -359,10 +360,16 @@ int main(int argc, char **argv)
     std::cout << "saveFolderPath: " << saveFolderPath << std::endl;
 
     // clear output files instead of appending
-    std::ofstream fp1(saveFolderPath + GyroAidedTracker::TRACK_FEATURES_FILE_NAME, ofstream::out);
-    fp1.close();
-    std::ofstream fp2(saveFolderPath + GyroAidedTracker::TIME_COST_FILE_NAME, ofstream::out);
-    fp2.close();
+    std::vector<std::string> output_files = {GyroAidedTracker::TRACK_FEATURES_FILE_NAME, 
+                                            GyroAidedTracker::TIME_COST_FILE_NAME,
+                                            "angVel.txt",
+                                            "gyroFlow.txt",
+                                            "matchFlow.txt",
+                                            "errorFlow.txt"};
+    for (auto filename : output_files){
+        std::ofstream fp(saveFolderPath + filename, ofstream::out);
+        fp.close();
+    }
 
     detectedKeypointsFile = path + detectedKeypointsFile;
     if(loadDetectedKeypoints){ // if Load keypoints from file. Default: not execute
@@ -396,6 +403,8 @@ int main(int argc, char **argv)
     ros::Timer process_timer = nh.createTimer(ros::Duration(0.005), sensorProcessTimer);
 
     ////////////////////////////////////////////////////////////
+    double start_time = ros::Time::now().toSec();
+    int frame_count = 0;
     if(read_from_rosbag)
     {
         rosbag::Bag bag;
@@ -418,37 +427,42 @@ int main(int argc, char **argv)
 
             if(m.getTopic() == image_topic || ("/"+m.getTopic() == image_topic)){
                 sensor_msgs::ImageConstPtr sImage = m.instantiate<sensor_msgs::Image>();
-                if(sImage != NULL) imageCallback(sImage);
-                // sensorProcessTimer(ros::TimerEvent());
+                if(sImage != NULL) {
+                    imageCallback(sImage);
+                    frame_count++;
+                }
+                sensorProcessTimer(ros::TimerEvent());
 
-                // button control
-                if(cv::waitKey(1) == 's')
-                {
-                    LOG(INFO) << "Enable step mode, please select the image show window "
-                                 "and then press null space button to step-continue or press 'q' to return to normal mode.";
-                    step_mode = true;
-                }
-                while (step_mode) {
-                    int key = cv::waitKey(1);
-                    if(key == 'q') {
-                        step_mode = false;
-                        LOG(INFO) << "Noraml mode ...";
-                        break;
-                    }else if(key == 32){ // Capture next frame.
-                        break;
-                    }else{
-                        r.sleep();
-                        if(!ros::ok())
-                            break;
-                    }
-                }
+            //     // button control
+            //     if(cv::waitKey(1) == 's')
+            //     {
+            //         LOG(INFO) << "Enable step mode, please select the image show window "
+            //                      "and then press null space button to step-continue or press 'q' to return to normal mode.";
+            //         step_mode = true;
+            //     }
+            //     while (step_mode) {
+            //         int key = cv::waitKey(1);
+            //         if(key == 'q') {
+            //             step_mode = false;
+            //             LOG(INFO) << "Noraml mode ...";
+            //             break;
+            //         }else if(key == 32){ // Capture next frame.
+            //             break;
+            //         }else{
+            //             r.sleep();
+            //             if(!ros::ok())
+            //                 break;
+            //         }
+            //     }
             }
 
-            ros::spinOnce();
-            r.sleep();
+            // ros::spinOnce();
+            // r.sleep();
             if(!ros::ok())
                 break;
         }
+        double runtime = ros::Time::now().toSec() - start_time;
+        printf("runtime: %.2f, frames: %d, fps: %.2f\n", runtime, frame_count, frame_count/runtime);
         bag.close();
         return 0;
     }

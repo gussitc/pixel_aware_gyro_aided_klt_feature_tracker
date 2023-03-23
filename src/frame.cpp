@@ -423,6 +423,7 @@ void Frame::Display(std::string winname, int drawFlowType, bool bDrawPatch, bool
              cv::Point2f pt_gyro = curFrameWithoutGeometryValid->mvPtGyroPredictUn[i] + cv::Point2f(w + margin,0);
              if(pt_gyro.x != 0 && pt_gyro.y != 0){
                  cv::circle(im_out, pt_gyro, circle_radius, COLOR_YELLOW, 1); // yellow circle
+                 cv::arrowedLine(im_out, pt_ref + cv::Point2f(w+margin, 0), pt_gyro, COLOR_YELLOW, line_thickness, cv::LINE_AA);
              }
         }
     }
